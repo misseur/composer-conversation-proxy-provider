@@ -1,0 +1,37 @@
+{
+    "name": "etna/conversation-proxy-provider",
+    "description": "A proxy to the conversation api",
+    "keywords": ["conversation", "proxy", "silex"],
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "ETNA",
+            "email": "dev@etna-alternance.net",
+            "homepage": "http://etna-alternance.net"
+        }
+    ],
+    "require": {
+        "php": ">=5.6",
+        "silex/silex": "1.x",
+        "guzzle/silex-provider": "1.x"
+    },
+    "autoload": {
+        "classmap": [
+            "TestProxy/"
+        ],
+        "psr-4": {
+            "ETNA\\Silex\\Provider\\ConversationProxy\\": "src"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "repositories": [
+       {
+           "type": "composer",
+           "url": "http://blu-composer.herokuapp.com"
+       }
+   ]
+}
