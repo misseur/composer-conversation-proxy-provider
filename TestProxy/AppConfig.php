@@ -12,15 +12,13 @@ use Silex\ServiceProviderInterface;
  */
 class AppConfig implements ServiceProviderInterface
 {
-    private $app = null;
-
     /**
      * @{inherit doc}
      */
     public function register(Application $app)
     {
-        $this->app = $app;
-        $app->register(new ConversationProxyProvider());
+        $application_env = getenv("APPLICATION_ENV");
+        $app->register(new ConversationConfig($application_env));
     }
 
     /**
@@ -28,6 +26,6 @@ class AppConfig implements ServiceProviderInterface
      */
     public function boot(Application $app)
     {
-        $app = $app;
+        return $app;
     }
 }
