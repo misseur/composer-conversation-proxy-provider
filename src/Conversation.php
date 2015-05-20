@@ -207,7 +207,7 @@ class Conversation
     public function addMessage($message)
     {
         if (false === is_string($message)) {
-            return $this;
+            throw new \Exception("Message given to addMessage method needs to be of type string");
         }
 
         $this->messages[] = ["content" => $message];
@@ -275,25 +275,29 @@ class Conversation
      */
     private function addSaveAction(array $save_action)
     {
-        $is_conversation_create = in_array(["method" => "post", "route" => "/conversations"], $this->save_actions);
+        $creation_scheduled = in_array(["method" => "post", "route" => "/conversations"], $this->save_actions);
 
-        if (false === $is_conversation_create &&
-            (isset($save_action["content"]) || isset($save_action["acl"]))
-        ) {
-            $this->save_actions[] = $save_action;
+        if (true === $creation_scheduled) {
+            return;
         }
 
-        if (false === $is_conversation_create && isset($save_action["metas"])) {
-            $replaced = false;
-            foreach ($this->save_actions as $key => $action) {
-                if (isset($action["metas"])) {
-                    $this->save_actions[$key]["metas"] = $save_action["metas"];
-                    $replaced = true;
-                }
-            }
-            if (false === $replaced) {
+        switch (true) {
+            case isset($save_action["content"]):
+            case isset($save_action["acl"]):
                 $this->save_actions[] = $save_action;
-            }
+                break;
+            case isset($save_action["metas"]):
+                $replaced = false;
+                foreach ($this->save_actions as $key => $action) {
+                    if (isset($action["metas"])) {
+                        $this->save_actions[$key]["metas"] = $save_action["metas"];
+                        $replaced = true;
+                    }
+                }
+                if (false === $replaced) {
+                    $this->save_actions[] = $save_action;
+                }
+                break;
         }
     }
 

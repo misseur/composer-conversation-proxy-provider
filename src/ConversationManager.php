@@ -15,7 +15,7 @@ class ConversationManager
     public function __construct(Application $app = null)
     {
         if (null === $app) {
-            throw new \Exception("Conversation manager require $app to be set");
+            throw new \Exception("ConversationManager requires $app to be set");
         }
         $this->app = $app;
     }

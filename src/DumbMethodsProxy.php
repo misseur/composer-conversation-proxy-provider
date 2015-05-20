@@ -21,7 +21,7 @@ class DumbMethodsProxy implements ControllerProviderInterface
 
         //Dumb proxy for messages
         $controllers->get("/conversations/{conversation}/messages/{message}", [$this, "loadMessage"]);
-        $controllers->get("/conversations/{conversation}/messages", [$this, "loadMessages"]);
+        $controllers->get("/conversations/{conversation}/messages", [$this, "loadConversationMessages"]);
         $controllers->post("/conversations/{conversation}/messages", [$this, "writeMessage"]);
 
         //Dumb proxy for views
@@ -45,7 +45,7 @@ class DumbMethodsProxy implements ControllerProviderInterface
         return $this->doProxyWithoutDatas($app, $req);
     }
 
-    public function loadMessages(Application $app, Request $req)
+    public function loadConversationMessages(Application $app, Request $req)
     {
         return $this->doProxyWithoutDatas($app, $req);
     }
