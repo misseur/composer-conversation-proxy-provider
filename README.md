@@ -109,5 +109,5 @@ Ce provider met a disposition :
  - On peut la serializer en array grace a `$conversation->toArray()`
 - L'objet ConversationManager ($app["conversations"]) qui lui se comporte comme l'entity manager de doctrine, sauf qu'il permet aussi de recuperer des conversations. Il met a disposition les methodes :
  - `findByQueryString` qui prends en parametre une query string ElasticSearch (+contract_id:42 +app-name:gsa) et qui retourne un tableau de Conversations
- - `findOneByQueryString` qui prends aussi en parametre une query string mais retourne l'objet le plus pertinant
- - `save` qui prends en paramètre une Conversation et effectue les requetes necessaires pour sauvegarder les changements
+ - `findOneByQueryString` qui prends aussi en parametre une query string mais retourne l'objet le plus pertinent
+ - `save` qui prend en paramètre une Conversation et effectue les requetes necessaires pour sauvegarder les changements
