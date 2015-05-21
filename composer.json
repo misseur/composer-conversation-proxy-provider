@@ -16,9 +16,6 @@
         "guzzle/silex-provider": "1.x"
     },
     "autoload": {
-        "classmap": [
-            "TestProxy/"
-        ],
         "psr-4": {
             "ETNA\\Silex\\Provider\\ConversationProxy\\": "src"
         }
