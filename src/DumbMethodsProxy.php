@@ -90,16 +90,26 @@ class DumbMethodsProxy implements ControllerProviderInterface
 
     public function doProxyWithoutDatas(Application $app, Request $req)
     {
+        $method = $req->getMethod();
+        if (false === in_array($method, ["GET", "POST", "PUT", "DELETE"])) {
+            throw new Exception("ConversationProxy can not fire request of method : {$method}");
+        }
+
         $request  = $app["conversation_proxy"]
-            ->{$req->getMethod()}("{$req->getPathInfo()}?{$req->getQueryString()}");
+            ->{$method}("{$req->getPathInfo()}?{$req->getQueryString()}");
         $response = self::requestWithJsonResponse($request, $app, $req->cookies->get("authenticator"));
         return $response;
     }
 
     public function doProxyWithDatas(Application $app, Request $req)
     {
+        $method = $req->getMethod();
+        if (false === in_array($method, ["GET", "POST", "PUT", "DELETE"])) {
+            throw new Exception("ConversationProxy can not fire request of method : {$method}");
+        }
+
         $request  = $app["conversation_proxy"]
-            ->{$req->getMethod()}("{$req->getPathInfo()}?{$req->getQueryString()}", [], $req->request->all());
+            ->{$method}("{$req->getPathInfo()}?{$req->getQueryString()}", [], $req->request->all());
         $response = self::requestWithJsonResponse($request, $app, $req->cookies->get("authenticator"));
         return $response;
     }
