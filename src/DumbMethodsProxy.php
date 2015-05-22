@@ -91,7 +91,7 @@ class DumbMethodsProxy implements ControllerProviderInterface
     public function doProxyWithoutDatas(Application $app, Request $req)
     {
         $method = $req->getMethod();
-        if (false === in_array($method, ["GET", "POST", "PUT", "DELETE"])) {
+        if (false === in_array($method, ["GET", "POST", "PUT", "DELETE", "OPTIONS"])) {
             throw new Exception("ConversationProxy can not fire request of method : {$method}");
         }
 
@@ -104,7 +104,7 @@ class DumbMethodsProxy implements ControllerProviderInterface
     public function doProxyWithDatas(Application $app, Request $req)
     {
         $method = $req->getMethod();
-        if (false === in_array($method, ["GET", "POST", "PUT", "DELETE"])) {
+        if (false === in_array($method, ["GET", "POST", "PUT", "DELETE", "OPTIONS"])) {
             throw new Exception("ConversationProxy can not fire request of method : {$method}");
         }
 
