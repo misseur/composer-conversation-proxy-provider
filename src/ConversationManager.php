@@ -22,7 +22,7 @@ class ConversationManager
 
     public function findByQueryString($query, $from = 0, $size = 99999)
     {
-        $query = urlencode($query);
+        $query   = urlencode($query);
         $request = $this->app["conversation_proxy"]
             ->get("/search?q={$query}&from={$from}&size={$size}");
         $response = $this->fireRequest($request, $this->app["cookies.authenticator"]);
