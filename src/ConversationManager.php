@@ -28,7 +28,7 @@ class ConversationManager
         $response = $this->fireRequest($request, $this->app["cookies.authenticator"]);
 
         $conversations_array = [];
-        $conversations       = $response["conversations"]["hits"];
+        $conversations       = $response["hits"];
         foreach ($conversations as $conversation) {
             $conversation_item = new Conversation();
             $conversation_item->fromArray($conversation);
