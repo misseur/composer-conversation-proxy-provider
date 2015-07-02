@@ -19,6 +19,10 @@ class DumbMethodsProxy implements ControllerProviderInterface
 
         $controllers = $app["controllers_factory"];
 
+        //Dumb proxy for stats and search
+        $controllers->get("/conversations/search", [$this, "conversationSearch"]);
+        $controllers->get("/conversations/stats", [$this, "conversationStats"]);
+
         //Dumb proxy for messages
         $controllers->get("/conversations/{conversation}/messages/{message}", [$this, "loadMessage"]);
         $controllers->get("/conversations/{conversation}/messages", [$this, "loadConversationMessages"]);
@@ -38,6 +42,16 @@ class DumbMethodsProxy implements ControllerProviderInterface
         $controllers->delete("/conversations/{conversation}/messages/{message}/like", [$this, "removeLike"]);
 
         return $controllers;
+    }
+
+    public function conversationSearch(Application $app, Request $req)
+    {
+        return $this->getRequestWithBody($app, $req, "/conversations");
+    }
+
+    public function conversationStats(Application $app, Request $req)
+    {
+        return $this->getRequestWithBody($app, $req, "/conversations");
     }
 
     public function loadMessage(Application $app, Request $req)
@@ -110,6 +124,17 @@ class DumbMethodsProxy implements ControllerProviderInterface
 
         $request  = $app["conversation_proxy"]
             ->{$method}("{$req->getPathInfo()}?{$req->getQueryString()}", [], $req->request->all());
+        $response = self::requestWithJsonResponse($request, $app, $req->cookies->get("authenticator"));
+        return $response;
+    }
+
+    public function getRequestWithBody(Application $app, Request $req, $remove_prefix = "")
+    {
+        $path_info = $req->getPathInfo();
+        $path_info = str_replace($remove_prefix, "", $path_info);
+
+        $request  = $app["conversation_proxy"]
+            ->createRequest("GET", "{$path_info}?{$req->getQueryString()}", [], $req->request->all());
         $response = self::requestWithJsonResponse($request, $app, $req->cookies->get("authenticator"));
         return $response;
     }
