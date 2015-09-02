@@ -2,7 +2,7 @@
 
 namespace ETNA\Silex\Provider\ConversationProxy;
 
-class Conversation implement \jsonserialize
+class Conversation implements \JsonSerializable
 {
     /* @var integer $id */
     private $id;
@@ -311,7 +311,7 @@ class Conversation implement \jsonserialize
         return $this->save_actions;
     }
 
-    public function jsonserialize()
+    public function jsonSerialize()
     {
         return $this->toArray;
     }
