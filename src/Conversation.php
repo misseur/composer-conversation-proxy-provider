@@ -313,6 +313,6 @@ class Conversation implements \JsonSerializable
 
     public function jsonSerialize()
     {
-        return $this->toArray;
+        return $this->toArray();
     }
 }
