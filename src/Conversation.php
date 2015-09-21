@@ -144,6 +144,22 @@ class Conversation implements \JsonSerializable
     }
 
     /**
+     * Add many acls to conversation
+     *
+     * @param  array $acls
+     *
+     * @return self
+     */
+    public function addAcls(array $acls)
+    {
+        foreach ($acls as $acl) {
+            $this->addAcl($acl);
+        }
+
+        return $this;
+    }
+
+    /**
      * Add acl to conversation
      *
      * @param  array $acl
