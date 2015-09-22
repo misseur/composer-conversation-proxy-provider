@@ -27,23 +27,25 @@ class ConversationManager
             ->get("/search?q={$query}&from={$from}&size={$size}");
         $response = $this->fireRequest($request, $this->app["cookies.authenticator"]);
 
-        $conversations_array = [];
-        $conversations       = $response["hits"];
-        foreach ($conversations as $conversation) {
-            $conversation_item = new Conversation();
-            $conversation_item->fromArray($conversation);
-            $conversations_array[] = $conversation_item;
-        }
-        return $conversations_array;
+        $response["hits"] = array_map(
+            function($hit) {
+                $conversation = new Conversation();
+                $conversation->fromArray($hit);
+                return $conversation;
+            },
+            $response["hits"]
+        );
+
+        return $response;
     }
 
     public function findOneByQueryString($query)
     {
         $matching = $this->findByQueryString($query, 0, 1);
-        if (0 === count($matching)) {
+        if (0 === count($matching["hits"])) {
             return null;
         }
-        return $matching[0];
+        return $matching["hits"][0];
     }
 
     public function save(Conversation $conversation)
