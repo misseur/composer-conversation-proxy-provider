@@ -220,18 +220,27 @@ class Conversation implements \JsonSerializable
      *
      * @return self
      */
-    public function addMessage($message)
+    public function addMessage($message, $type = "message")
     {
         if (false === is_string($message)) {
             throw new \Exception("Message given to addMessage method needs to be of type string");
         }
 
-        $this->messages[] = ["content" => $message];
-        $this->addSaveAction([
-            "method"  => "post",
-            "route"   => "/conversations/{$this->id}/messages",
+        $new_message = [
             "content" => $message,
-        ]);
+            "type"    => $type
+        ];
+
+        $this->messages[] = $new_message;
+        $this->addSaveAction(
+            array_merge(
+                [
+                    "method"  => "post",
+                    "route"   => "/conversations/{$this->id}/messages"
+                ],
+                $new_message
+            )
+        );
 
         return $this;
     }
