@@ -60,6 +60,7 @@ class ConversationManager
             }
 
             $body["content"] = $body["messages"][0]["content"];
+            $body["type"]    = $body["messages"][0]["type"];
             $body["metas"]   = json_encode($body["metas"]);
             unset($body["messages"]);
 
