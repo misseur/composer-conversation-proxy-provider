@@ -1,8 +1,7 @@
 # composer-conversation-proxy-provider
 Permets aux differentes applications d'avoir un proxy vers conversation-api
 
-Installation
-------------
+## Installation
 
 Modifier `composer.json` :
 
@@ -10,7 +9,7 @@ Modifier `composer.json` :
 {
     // ...
     "require": {
-        "etna/conversation-proxy-provider": "~0.1"
+        "etna/conversation-proxy-provider": "~1.0.x"
     },
     "repositories": [
        {
@@ -21,52 +20,41 @@ Modifier `composer.json` :
 }
 ```
 
-Utilisation
------------
+## Utilisation
 
-Il faut tout d'abord creer une classe pour la configuration de ce provider :
+### Déclarer le composant
+
+Le composant `etna/config-provider` met à disposition une classe permettant de faire utiliser ce proxy a notre application.
+
+Lors de la configuration de l'application il faut donc utiliser la classe `ETNA\Silex\Provider\Config\ConversationProxy` :
+
 ```
-class ConversationConfig implements ServiceProviderInterface
+use ETNA\Silex\Provider\Config as ETNAConf;
+
+class EtnaConfig implements ServiceProviderInterface
 {
-    private $application_env;
-
-    public function __construct($application_env = null)
-    {
-        if (null === $application_env) {
-            throw new \Exception("Application env is not set");
-        }
-        $this->application_env = $application_env;
-    }
-
-    public function boot(Application $app)
-    {
-        return $app;
-    }
-
     public function register(Application $app)
     {
-        switch ($this->application_env) {
-            case "production":
-                putenv("CONVERSATION_API_URL=https://conversation-api.etna-alternance.net");
-                break;
-            case "development":
-                putenv("CONVERSATION_API_URL=http://conversation-api.etna.dev");
-                break;
-        }
+        ...
 
-        //Dans le cas ou l'on souhaite fournir son propre controlleur
-        $controller = new ConversationController();
-        $app->register(new ConversationProxyProvider($controller));
-        //Sinon
-        $app->register(new ConversationProxyProvider());
+        //L'utilisation du controlleur custom est expliquée plus bas
+        $my_controller = new ConversationController();
+        $app->register(new ETNAConf\ConversationProxy($my_controller));
+
+        ...
     }
 }
 ```
+
+### Le contenu de ce composant
+
+##### Le controlleur custom
 
 Ce provider met a disposition un `DumbMethodsProxy` qui fournit toutes les routes basiques de conversations :
  - Likes
  - Message
  - Views
+ - Recherche
 
 Il est possible de creer un controlleur qui hérite de ce `DumbMethodsProxy` pour rajouter des routes custom :
 ```
@@ -102,6 +90,8 @@ class ConversationController extends DumbMethodsProxy
     }
 }
 ```
+
+##### Les plus de ce proxy
 
 Ce provider met a disposition :
 - L'objet Conversation, qui est une "entité" qui se comporte comme une entité doctrine le ferait

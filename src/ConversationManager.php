@@ -59,13 +59,9 @@ class ConversationManager
                 return $this->app->abort(400, "Need content to create conversation");
             }
 
-            $body["content"] = $body["messages"][0]["content"];
-            $body["type"]    = $body["messages"][0]["type"];
-            $body["metas"]   = json_encode($body["metas"]);
-            unset($body["messages"]);
-
-            $request  = $this->app["conversation_proxy"]->post("/conversations", [], $body);
-            $response = $this->fireRequest($request, $this->app["cookies.authenticator"]);
+            $body["metas"] = json_encode($body["metas"]);
+            $request       = $this->app["conversation_proxy"]->post("/conversations", [], $body);
+            $response      = $this->fireRequest($request, $this->app["cookies.authenticator"]);
         } else {
             foreach ($actions as $action) {
                 $route  = $action["route"];
