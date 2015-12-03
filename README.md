@@ -1,6 +1,8 @@
 # composer-conversation-proxy-provider
 Permets aux differentes applications d'avoir un proxy vers conversation-api
 
+[![GitHub version](https://badge.fury.io/gh/etna-alternance%2Fcomposer-conversation-proxy-provider.svg)](https://badge.fury.io/gh/etna-alternance%2Fcomposer-conversation-proxy-provider)
+
 ## Installation
 
 Modifier `composer.json` :
