@@ -2,6 +2,7 @@
 Permets aux differentes applications d'avoir un proxy vers conversation-api
 
 [![GitHub version](https://badge.fury.io/gh/etna-alternance%2Fcomposer-conversation-proxy-provider.svg)](https://badge.fury.io/gh/etna-alternance%2Fcomposer-conversation-proxy-provider)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/etna-alternance/composer-conversation-proxy-provider/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/etna-alternance/composer-conversation-proxy-provider/?branch=master)
 
 ## Installation
 
