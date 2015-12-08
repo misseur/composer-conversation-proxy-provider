@@ -43,7 +43,7 @@ class ConversationManager
     {
         $query   = urlencode($query);
         $request = $this->app["conversation_proxy"]
-            ->get("/fetchUnread?q={$query}&from={$from}&size={$size}");
+            ->get("/fetch_unread?q={$query}&from={$from}&size={$size}");
         $unread = $this->fireRequest($request, $this->app["cookies.authenticator"]);
 
         return $unread;
