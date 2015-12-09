@@ -28,7 +28,7 @@ class ConversationManager
         $response = $this->fireRequest($request, $this->app["cookies.authenticator"]);
 
         $response["hits"] = array_map(
-            function($hit) {
+            function ($hit) {
                 $conversation = new Conversation();
                 $conversation->fromArray($hit);
                 return $conversation;
@@ -37,6 +37,16 @@ class ConversationManager
         );
 
         return $response;
+    }
+
+    public function findUnreadByQueryString($query, $from = 0, $size = 99999)
+    {
+        $query   = urlencode($query);
+        $request = $this->app["conversation_proxy"]
+            ->get("/fetch_unread?q={$query}&from={$from}&size={$size}");
+        $unread = $this->fireRequest($request, $this->app["cookies.authenticator"]);
+
+        return $unread;
     }
 
     public function findOneByQueryString($query)
