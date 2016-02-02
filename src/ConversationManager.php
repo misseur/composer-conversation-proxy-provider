@@ -58,6 +58,16 @@ class ConversationManager
         return $matching["hits"][0];
     }
 
+    public function findStatsByQueryString($query, $from = 0, $size = 99999)
+    {
+        $query   = urlencode($query);
+        $request = $this->app["conversation_proxy"]
+            ->get("/stats?q={$query}&from={$from}&size={$size}");
+        $stats = $this->fireRequest($request, $this->app["cookies.authenticator"]);
+
+        return $stats;
+    }
+
     public function save(Conversation $conversation)
     {
         $actions  = $conversation->getSaveActions();
