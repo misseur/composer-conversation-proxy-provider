@@ -63,7 +63,7 @@ class ConversationManager
         $query   = urlencode($query);
         $request = $this->app["conversation_proxy"]
             ->get("/stats?q={$query}&from={$from}&size={$size}");
-        $stats = $this->fireRequest($request, $this->app["cookies.authenticator"]);
+        $stats   = $this->fireRequest($request, $this->app["cookies.authenticator"]);
 
         return $stats;
     }
