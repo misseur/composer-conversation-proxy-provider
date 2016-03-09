@@ -20,6 +20,17 @@ class ConversationManager
         $this->app = $app;
     }
 
+    public function findOneById($conversation_id)
+    {
+        $request = $this->app["conversation_proxy"]
+            ->get("/conversations/{$conversation_id}");
+        $response = $this->fireRequest($request, $this->app["cookies.authenticator"]);
+
+        $conversation = new Conversation();
+        $conversation->fromArray($response);
+        return $conversation;
+    }
+
     public function findByQueryString($query, $from = 0, $size = 99999)
     {
         $query   = urlencode($query);
