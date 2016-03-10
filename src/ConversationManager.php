@@ -28,6 +28,7 @@ class ConversationManager
 
         $conversation = new Conversation();
         $conversation->fromArray($response);
+
         return $conversation;
     }
 
